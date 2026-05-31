@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import Navbar from "../components/Navbar";
-import Pagination from "../components/PaginationCard";
-const HomeLayout = ({ children }) => {
+import Pagination from "../components/Pagination";
+const HomeLayout = ({ children, count, page, onChange }) => {
   return (
     <Box>
       <Navbar />
       {children}
-      <Pagination />
+      <Pagination count={count} page={page} onChange={onChange} />
     </Box>
   );
 };
