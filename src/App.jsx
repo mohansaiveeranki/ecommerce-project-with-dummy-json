@@ -1,17 +1,15 @@
-import React from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import PaginationCard from "./components/PaginationCard";
+import Home from "./pages/home";
 
 const App = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar />
       <ProductCard />
-      <PaginationCard />
-      <h1 className="text-5xl font-bold underline text-blue-600 text-center mt-10">
-        Tailwind works!
-      </h1>
+      <PaginationCard /> */}
+      <Home />
     </div>
   );
 };
