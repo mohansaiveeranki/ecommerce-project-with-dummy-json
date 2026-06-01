@@ -1,13 +1,14 @@
 import Home from "./pages/home";
-
+import ProductDetailPage from "./routes/ProductDetailPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
-    <div>
-      {/* <Navbar />
-      <ProductCard />
-      <PaginationCard /> */}
-      <Home />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

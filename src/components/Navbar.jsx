@@ -7,6 +7,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
 import Button from "@mui/material/Button";
+import { useState } from "react";
+import Menubars from "./Menubars";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -38,7 +40,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -50,7 +51,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({ onSearch }) {
+  const [query, setQuery] = useState("");
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && onSearch) {
+      onSearch(query);
+    }
+  };
+
+  const handleSetQuery = (event) => {
+    const value = event.target.value;
+    setQuery(value);
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
@@ -65,7 +82,13 @@ export default function Navbar() {
             <HomeIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           </IconButton>
 
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -73,8 +96,12 @@ export default function Navbar() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                value={query}
+                onChange={handleSetQuery}
+                onKeyDown={handleKeyDown}
               />
             </Search>
+            <Menubars />
           </Box>
           <Button color="inherit" sx={{ ml: 2, marginLeft: "auto" }}>
             Login

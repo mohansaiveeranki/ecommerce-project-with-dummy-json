@@ -6,11 +6,15 @@ import {
   CardActionArea,
   CircularProgress,
 } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 export default function ProductCard({ product }) {
+  const navigate = useNavigate();
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
   return (
     <Card sx={{ maxWidth: 345, height: "100%" }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleCardClick}>
         <CardMedia
           component="img"
           height="140"

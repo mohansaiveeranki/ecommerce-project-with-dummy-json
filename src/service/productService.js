@@ -10,3 +10,24 @@ export const getProducts = async ({ limit = 10, skip = 0 }) => {
     total: response.data.total,
   };
 };
+
+export const searchProducts = async (query) => {
+  const safeQuery = encodeURIComponent(query);
+  const response = await httpService.get(
+    `${ENDPOINTS.PRODUCTS_SEARCH}${safeQuery}`,
+  );
+  return {
+    products: response.data.products,
+    total: response.data.total,
+  };
+};
+
+export const getCategories = async () => {
+  const response = await httpService.get(ENDPOINTS.CATEGORIES);
+  return response.data;
+};
+
+export const getProductById = async (id) => {
+  const response = await httpService.get(`${ENDPOINTS.PRODUCTS}/${id}`);
+  return response.data;
+};
