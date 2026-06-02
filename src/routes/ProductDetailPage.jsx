@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../service/productService";
-import { Box, Typography, Button, CircularProgress, Grid } from "@mui/material";
+import { Box, Typography, Button, Grid } from "@mui/material";
 import Loader from "../components/Loader";
 
 const ProductDetailPage = () => {

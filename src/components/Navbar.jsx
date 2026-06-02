@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar({ onSearch }) {
+export default function Navbar({ onSearch, onCategorySelect, selectedCategory }) {
   const [query, setQuery] = useState("");
 
   const handleKeyDown = (e) => {
@@ -101,7 +101,10 @@ export default function Navbar({ onSearch }) {
                 onKeyDown={handleKeyDown}
               />
             </Search>
-            <Menubars />
+            <Menubars
+              onCategorySelect={onCategorySelect}
+              selectedCategory={selectedCategory}
+            />
           </Box>
           <Button color="inherit" sx={{ ml: 2, marginLeft: "auto" }}>
             Login

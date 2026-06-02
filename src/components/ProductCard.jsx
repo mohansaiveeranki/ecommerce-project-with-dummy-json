@@ -4,7 +4,6 @@ import {
   CardMedia,
   Typography,
   CardActionArea,
-  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 export default function ProductCard({ product }) {

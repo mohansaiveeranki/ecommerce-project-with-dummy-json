@@ -5,9 +5,19 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
-export default function Menubars({ onCategorySelect }) {
+const formatCategoryLabel = (category) =>
+  category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+export default function Menubars({ onCategorySelect, selectedCategory = "all" }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const buttonLabel =
+    selectedCategory === "all"
+      ? "Categories"
+      : formatCategoryLabel(selectedCategory);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -29,7 +39,7 @@ export default function Menubars({ onCategorySelect }) {
       {(popupState) => (
         <>
           <Button variant="contained" {...bindTrigger(popupState)}>
-            {loading ? "Loading..." : "Categories"}
+            {loading ? "Loading..." : buttonLabel}
           </Button>
           <Menu {...bindMenu(popupState)}>
             <MenuItem
@@ -49,7 +59,7 @@ export default function Menubars({ onCategorySelect }) {
                   if (onCategorySelect) onCategorySelect(category);
                 }}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {formatCategoryLabel(category)}
               </MenuItem>
             ))}
           </Menu>

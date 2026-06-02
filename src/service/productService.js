@@ -11,6 +11,20 @@ export const getProducts = async ({ limit = 10, skip = 0 }) => {
   };
 };
 
+export const getProductsByCategory = async (
+  category,
+  { limit = 10, skip = 0 } = {},
+) => {
+  const safeCategory = encodeURIComponent(category);
+  const response = await httpService.get(
+    `${ENDPOINTS.PRODUCTS_BY_CATEGORY}/${safeCategory}?limit=${limit}&skip=${skip}`,
+  );
+  return {
+    products: response.data.products,
+    total: response.data.total,
+  };
+};
+
 export const searchProducts = async (query) => {
   const safeQuery = encodeURIComponent(query);
   const response = await httpService.get(
