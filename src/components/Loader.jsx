@@ -8,10 +8,10 @@ export default function Loader() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        mt: "8rem",
+        minHeight: 320,
       }}
     >
-      <CircularProgress aria-label="Loading…" />
+      <CircularProgress aria-label="Loading" />
     </Box>
   );
 }

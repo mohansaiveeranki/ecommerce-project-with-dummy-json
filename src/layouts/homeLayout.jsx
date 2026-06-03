@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Pagination from "../components/Pagination";
+
 const HomeLayout = ({
   children,
   count,
@@ -11,13 +12,15 @@ const HomeLayout = ({
   selectedCategory,
 }) => {
   return (
-    <Box>
+    <Box sx={{ minHeight: "100vh", pb: 12 }}>
       <Navbar
         onSearch={onSearch}
         onCategorySelect={onCategorySelect}
         selectedCategory={selectedCategory}
       />
-      <Box sx={{ pt: 14 }}>{children}</Box>
+      <Box sx={{ pt: { xs: 18, sm: 14, md: 13 }, px: { xs: 2, sm: 3 } }}>
+        {children}
+      </Box>
       <Pagination count={count} page={page} onChange={onChange} />
     </Box>
   );
