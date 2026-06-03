@@ -5,14 +5,19 @@ import {
   CardMedia,
   Typography,
   CardActionArea,
+  CardActions,
+  Button,
   Chip,
   Stack,
   Rating,
 } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const discountPrice =
     product.discountPercentage > 0
       ? product.price - (product.price * product.discountPercentage) / 100
@@ -23,6 +28,8 @@ export default function ProductCard({ product }) {
       elevation={0}
       sx={{
         height: "100%",
+        display: "flex",
+        flexDirection: "column",
         border: "1px solid rgba(15, 23, 42, 0.08)",
         overflow: "hidden",
         transition: "transform 180ms ease, box-shadow 180ms ease",
@@ -35,7 +42,7 @@ export default function ProductCard({ product }) {
       <CardActionArea
         onClick={() => navigate(`/product/${product.id}`)}
         sx={{
-          height: "100%",
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "stretch",
@@ -154,6 +161,16 @@ export default function ProductCard({ product }) {
           </Stack>
         </CardContent>
       </CardActionArea>
+      <CardActions sx={{ p: 2.5, pt: 0 }}>
+        <Button
+          fullWidth
+          variant="contained"
+          startIcon={<AddShoppingCartIcon />}
+          onClick={() => addToCart(product)}
+        >
+          Add to cart
+        </Button>
+      </CardActions>
     </Card>
   );
 }

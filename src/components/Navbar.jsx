@@ -4,12 +4,18 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Menubars from "./Menubars";
+import { useAuth } from "../context/authContext";
+import { useCart } from "../context/cartContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,6 +54,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar({ onSearch, onCategorySelect, selectedCategory }) {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const { currentUser, isAuthenticated, logout } = useAuth();
+  const { itemCount } = useCart();
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && onSearch) {
@@ -87,6 +96,8 @@ export default function Navbar({ onSearch, onCategorySelect, selectedCategory })
           }}
         >
           <IconButton
+            component={RouterLink}
+            to="/"
             size="large"
             edge="start"
             aria-label="Go home"
@@ -139,17 +150,84 @@ export default function Navbar({ onSearch, onCategorySelect, selectedCategory })
               selectedCategory={selectedCategory}
             />
           </Box>
-          <Button
-            variant="contained"
-            sx={{
-              display: { xs: "none", md: "inline-flex" },
-              ml: 1,
-              bgcolor: "text.primary",
-              "&:hover": { bgcolor: "#2a3431" },
-            }}
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{ ml: { md: 1 }, width: { xs: "100%", md: "auto" } }}
           >
-            Login
-          </Button>
+            <IconButton
+              component={RouterLink}
+              to="/cart"
+              aria-label={`Open cart with ${itemCount} items`}
+              sx={{
+                bgcolor: "background.paper",
+                border: "1px solid rgba(15, 23, 42, 0.12)",
+                "&:hover": { bgcolor: "#eef3f0" },
+              }}
+            >
+              <Badge badgeContent={itemCount} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            {isAuthenticated ? (
+              <>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    display: { xs: "none", lg: "block" },
+                    maxWidth: 140,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    color: "text.secondary",
+                  }}
+                >
+                  Hi, {currentUser.name}
+                </Typography>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                  sx={{
+                    flex: { xs: 1, md: "initial" },
+                    bgcolor: "text.primary",
+                    "&:hover": { bgcolor: "#2a3431" },
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  component={RouterLink}
+                  to="/login"
+                  variant="contained"
+                  sx={{
+                    flex: { xs: 1, md: "initial" },
+                    bgcolor: "text.primary",
+                    "&:hover": { bgcolor: "#2a3431" },
+                  }}
+                >
+                  Login
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/register"
+                  variant="outlined"
+                  sx={{
+                    display: { xs: "none", sm: "inline-flex" },
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  Register
+                </Button>
+              </>
+            )}
+          </Stack>
         </Toolbar>
       </AppBar>
     </Box>

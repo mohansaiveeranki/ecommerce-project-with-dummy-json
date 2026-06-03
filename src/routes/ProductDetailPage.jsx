@@ -12,13 +12,17 @@ import {
   Divider,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShieldIcon from "@mui/icons-material/Shield";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Loader from "../components/Loader";
+import { useCart } from "../context/cartContext";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -157,10 +161,25 @@ const ProductDetailPage = () => {
               spacing={1.5}
               sx={{ mb: 3 }}
             >
-              <Button variant="contained" size="large" sx={{ flex: 1 }}>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<AddShoppingCartIcon />}
+                onClick={() => addToCart(product)}
+                sx={{ flex: 1 }}
+              >
                 Add to cart
               </Button>
-              <Button variant="outlined" size="large" sx={{ flex: 1 }}>
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<ShoppingCartCheckoutIcon />}
+                onClick={() => {
+                  addToCart(product);
+                  navigate("/cart");
+                }}
+                sx={{ flex: 1 }}
+              >
                 Buy now
               </Button>
             </Stack>
